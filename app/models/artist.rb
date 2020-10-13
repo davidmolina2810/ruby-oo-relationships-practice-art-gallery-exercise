@@ -37,11 +37,12 @@ class Artist
 
   def self.most_prolific # returns artist with highest total number of paintings to years of experience ratio
     paint_to_experience = Artist.all.each_with_object(Hash.new(0)) {|artist, hash| hash[artist] = artist.paintings.length / artist.years_experience .to_f} # create hash where key is artist instance and value is ratio (num of paintings / years experience)
+    binding.pry 
     if paint_to_experience.values == paint_to_experience.values.uniq # if there are no repeating ratios for the artists
       return paint_to_experience.max {|(key1,val1),(key2,val2)| val1 <=> val2} # return artist with max ratio
-    else                                                             # else two or more artists have same num of paintings / years experience ratio
+    else                                                             # else, two or more artists have same num of paintings / years experience ratio
       max_ratio = paint_to_experience.values.max # determine what the max ratio is 
-      return paint_to_experience.select {|artist, ratio| ratio == max_ratio} # return all artists whose ratios match max_ratio
+      return paint_to_experience.select {|artist, ratio| ratio == max_ratio} # return array of all artists whose ratios match max_ratio
     end
   end
 
